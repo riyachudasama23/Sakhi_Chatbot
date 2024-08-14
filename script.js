@@ -1,5 +1,3 @@
-
-
 const data = [
   {
     name: "generalHealthAdvice",
@@ -22,7 +20,7 @@ const data = [
   {
     name: "Greetings",
     keywords: [
-      "hello",
+      "hello", "gm", "hii",
       "hi",
       "how are you",
       "what's up",
@@ -38,13 +36,13 @@ const data = [
   },
   {
     name: "Menstruation",
-    keywords: ["peroids", "cramps", "contractions"],
+    keywords: ["peroids", "cramps", "contractions","Menstruation","menstruation"],
     response:
       "Menstruation is the monthly shedding of the uterine lining in women of reproductive age, typically occurring every 21 to 35 days.",
   },
   {
     name: "Menstrual cramps",
-    keywords: ["cramps", "pain in lower abdomen", "lower back pain"],
+    keywords: ["cramps", "pain in lower abdomen", "lower back pain","pain"],
     response: "Pain relievers, heat therapy, exercise, yoga",
   },
   {
@@ -127,7 +125,53 @@ const data = [
     keywords:["white water","white discharge","ovulatory","Cervical mucus"],
     response:"Vaginal discharge is a clear, white or off-white fluid that comes out of your vagina. Your uterus, cervix and vagina produce vaginal discharge, which is mainly made up of cells and bacteria. It helps clean and lubricate your vagina, and helps fight off bad bacteria and infection."
   },
-  
-  
-  
+   
 ];
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inputText = document.querySelector(".input-text");
+  const sendButton = document.querySelector(".btn");
+  const chatbox = document.querySelector(".chatbox");
+
+  function getResponse(userInput) {
+    for (const item of data) {
+      for (const keyword of item.keywords) {
+        if (userInput.toLowerCase().includes(keyword.toLowerCase())) {
+          return item.response;
+        }
+      }
+    }
+    return "I'm not sure how to help with that. Can you provide more details?";
+  }
+
+  function addMessageToChat(message, isUserMessage = false) {
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<span>${message}</span>`;
+    if (isUserMessage) {
+      messageElement.classList.add("user-message");
+    } else {
+      messageElement.classList.add("bot-message");
+    }
+    chatbox.appendChild(messageElement);
+    chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+  }
+  
+
+  function handleSendMessage() {
+    const userInput = inputText.value.trim();
+    if (userInput) {
+      addMessageToChat(userInput, true); // Add user's message
+      const response = getResponse(userInput);
+      addMessageToChat(response); // Add chatbot's response
+      inputText.value = ""; // Clear the input field
+    }
+  }
+
+  sendButton.addEventListener("click", handleSendMessage);
+
+  inputText.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
+    }
+  });
+});
