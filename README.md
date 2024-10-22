@@ -67,7 +67,3 @@ Contributions are welcome! If you have suggestions for improving SAKHI or would 
 ## Contact
 
 If you have any questions or feedback, feel free to contact me at [riyachudasama1123@gmail.com].
-
----
-
-Feel free to adjust the text and sections to match your specific needs or preferences!
